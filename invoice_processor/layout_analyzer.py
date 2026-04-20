@@ -90,12 +90,12 @@ def detect_tables(binary: np.ndarray) -> list[RegionDict]:
     tables: list[RegionDict] = []
     img_area = binary.shape[0] * binary.shape[1]
     for cnt in contours:
-        x, y, w, wb = cv2.boundingRect(cnt)
-        area = w * wb
+        x, y, w, h = cv2.boundingRect(cnt)
+        area = w * h
         # Filter out very small spurious regions (< 1 % of image)
         if area / img_area < 0.01:
             continue
-        tables.append(_rect("table", x, y, w, wb))
+        tables.append(_rect("table", x, y, w, h))
 
     return tables
 
